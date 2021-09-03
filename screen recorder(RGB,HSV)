@@ -1,0 +1,40 @@
+import cv2
+import numpy as n
+import pyautogui as p
+
+r = p.size()
+
+fpath = input('Enter file name and path:')
+fps = 20.0
+fourcc =  cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter(fpath,fourcc,fps,r)
+
+cv2.namedWindow('Livee',cv2.WINDOW_NORMAL)
+cv2.resizeWindow('Livee',(500,400))
+print('\n Enter N for normal(RGB) recording \n hsv for recording in hsv mode')
+color = input('Enter color u want in recording:')
+if color=='N':
+ while True:
+    ss = p.screenshot()
+    rec = n.array(ss)
+    #rgb
+    cvt = cv2.cvtColor(rec,cv2.COLOR_BGR2RGB)
+    out.write(cvt)
+    cv2.imshow('recc',cvt)
+    if cv2.waitKey(1)==ord('q'):
+        break
+elif color=='hsv':
+  while True:
+    ss = p.screenshot()
+    rec = n.array(ss)
+    #rgb
+    cvt = cv2.cvtColor(rec,cv2.COLOR_BGR2HSV)
+    out.write(cvt)
+    cv2.imshow('recc',cvt)
+    if cv2.waitKey(1)==ord('q'):
+        break
+else:
+    pass    
+
+out.release()
+cv2.destroyAllWindows()
